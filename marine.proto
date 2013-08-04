@@ -5,6 +5,11 @@ message Vector2 {
     required float z = 2;
 }
 
+message Vector2Int {
+    required int32 x = 1;
+    required int32 z = 2;
+}
+
 
 enum Status {
     Idle = 0;

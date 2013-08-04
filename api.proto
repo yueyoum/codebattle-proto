@@ -92,12 +92,12 @@ message MarineOperate {
 // Command Response
 message CreateRoomResponse {
     required int32 id = 1;              // room id
-    required Vector2 size = 2;          // map size, (x, z)
+    required Vector2Int size = 2;       // map size, (x, z)
 }
 
 message JoinRoomResponse {
     required int32 id = 1;              // room id
-    required Vector2 size = 2;          // map size, (x, z)
+    required Vector2Int size = 2;       // map size, (x, z)
 }
 
 
