@@ -2,14 +2,6 @@ package CodeBattle.Api;
 
 import "marine.proto";
 
-message Sence {
-    required int32 width = 1;
-    required int32 height = 2;
-    required Marine ownMarine = 3;
-    repeated Marine otherMarines = 4;
-}
-
-
 
 enum CmdEnum {
     createroom = 0;
@@ -18,7 +10,18 @@ enum CmdEnum {
     marineoperate = 3;
 }
 
-// you send this
+enum MessageEnum {
+    cmdresponse = 0;
+    senceupdate = 1;
+}
+
+
+// You send this `Cmd` to Server
+// You should tell the server, what the Cmd actually does.
+// For example, you wanna create a marine in current game,
+// so, cmd = CmdEnum.createmarine (NOTE, different language maybe have different usage of Enum type)
+// then you must fill up the `CreateMarine` field.
+// Other optional fields can be ignored.
 message Cmd {
     required CmdEnum cmd = 1;
     optional CreateRoom crm = 2;
@@ -28,12 +31,11 @@ message Cmd {
 }
 
 
-enum MessageEnum {
-    cmdresponse = 0;
-    senceupdate = 1;
-}
-
-// and got this from server
+// And got `Message` back from Server
+// Same as the `Cmd`, there is also an enum field to tell you what the message is.
+// if msg == MessageEnum.cmdresponse, means this is a response for your `Cmd`.
+// if msg == MessageEnum.senceupdate, means the game sence has changed. 
+// (There are only Marines in sence so far)
 message Message {
     required MessageEnum msg = 1;
     optional CmdResponse response = 2;
@@ -41,15 +43,20 @@ message Message {
 }
 
 
-
+// `CmdResponse` NOT contains `MarineOperate` command.
+// Because All Marine Changes will notify you via `SenceUpdate`
 message CmdResponse {
-    required int32 ret = 1;         // return code, 0 for success
+    required int32 ret = 1;         // return code, 0 for success, others see at top of this file.
     required CmdEnum cmd = 2;       // what cmd response for
     optional CreateRoomResponse crmResponse = 3;
-    optional CreateMarineResponse cmeResponse = 4;
+    optional JoinRoomResponse jrmResponse = 4;
+    optional CreateMarineResponse cmeResponse = 5;
 }
 
 
+// `SenceUpdate` only contains Marine so far.
+// NOTE, ONLY contain one Marine per `SenceUpdate`,
+// Which means, When one marine has changed, you will got this message.
 message SenceUpdate {
     required Marine marine = 1;
 }
@@ -57,9 +64,10 @@ message SenceUpdate {
 
 
 
-// Command
+// Commands
 message CreateRoom {
-    required int32 map = 1;         // which map you wanna using.  ignore this right now.
+    required int32 map = 1;         // which map you wanna using. 
+                                    // ignore this right now. any integer will be ok.
 }
 
 message JoinRoom {
@@ -68,8 +76,9 @@ message JoinRoom {
 
 
 message CreateMarine {
-    required int32 roomid = 1;
-    required string name = 2;
+    required int32 roomid = 1;      // you MUST create/join room first, and you will got a roomid.
+    required string name = 2;       // your marine name
+    required Vector2 position = 3;  // your marine birth point (MUST in the map area).
 }
 
 
@@ -82,9 +91,16 @@ message MarineOperate {
 
 // Command Response
 message CreateRoomResponse {
-    required int32 id = 1;
+    required int32 id = 1;              // room id
+    required Vector2 size = 2;          // map size, (x, z)
 }
 
+message JoinRoomResponse {
+    required int32 id = 1;              // room id
+    required Vector2 size = 2;          // map size, (x, z)
+}
+
+
 message CreateMarineResponse {
-    required int32 id = 1;
+    required int32 id = 1;              // your marine id
 }

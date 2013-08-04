@@ -19,12 +19,10 @@ message Marine {
     required int32 id = 1;
     required string name = 2;
     required string tag = 3;
-    required int32 hpMax = 4;
-    required int32 hp = 5;
+    required int32 initialHp = 4;
+    required int32 currentHp = 5;
 
     required Vector2 position = 6;
-    required Vector2 rotation = 7;
-
-    required Status status = 8;
+    required Status status = 7;
 }
 
