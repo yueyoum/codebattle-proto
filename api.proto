@@ -2,6 +2,19 @@ package CodeBattle.Api;
 
 import "marine.proto";
 
+// Error Code
+// 1 - You have already create a room
+// 2 - You have already join a room
+// 3 - Can not found the room which you wanna join in
+// 4 - The room has no place to join in  [NOT used so far]
+// 5 - You can't create marine before create/join a room
+// 6 - Create marine NOT in your create/join room
+// 7 - You have touched the limits of this room allowed max marine creates number.
+
+
+
+
+
 
 enum CmdEnum {
     createroom = 0;
