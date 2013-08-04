@@ -1,0 +1,83 @@
+package CodeBattle.Api;
+
+import "marine.proto";
+
+message Sence {
+    required int32 width = 1;
+    required int32 height = 2;
+    required Marine ownMarine = 3;
+    repeated Marine otherMarines = 4;
+}
+
+
+
+enum CmdEnum {
+    createroom = 0;
+    createmarine = 1;
+    marineoperate = 2;
+}
+
+// you send this
+message Cmd {
+    required CmdEnum cmd = 1;
+    optional CreateRoom crm = 2;
+    optional CreateMarine cme = 3;
+    optional MarineOperate opt = 4;
+}
+
+
+enum MessageEnum {
+    cmdresponse = 0;
+    senceupdate = 1;
+}
+
+// and got this from server
+message Message {
+    required MessageEnum msg = 1;
+    optional CmdResponse response = 2;
+    optional SenceUpdate update = 3;
+}
+
+
+
+message CmdResponse {
+    required int32 ret = 1;         // return code, 0 for success
+    required CmdEnum cmd = 2;       // what cmd response for
+    optional CreateRoomResponse crmResponse = 3;
+    optional CreateMarineResponse cmeResponse = 4;
+}
+
+
+message SenceUpdate {
+    required Marine marine = 1;
+}
+
+
+
+
+// Command
+message CreateRoom {
+    required int32 map = 1;         // which map you wanna using.  ignore this right now.
+}
+
+message CreateMarine {
+    required int32 roomid = 1;
+    required string name = 2;
+}
+
+
+message MarineOperate {
+    required int32 id = 1;              // marine id
+    required Status status = 2;         // new status
+    optional Vector2 targetPostion = 3; // 
+}
+
+
+// Command Response
+message CreateRoomResponse {
+    required int32 id = 1;
+}
+
+message CreateMarineResponse {
+    required int32 id = 1;
+}

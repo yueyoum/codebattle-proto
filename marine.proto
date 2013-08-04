@@ -1,0 +1,30 @@
+package CodeBattle;
+
+message Vector2 {
+    required float x = 1;
+    required float z = 2;
+}
+
+
+enum Status {
+    Idle = 0;
+    Run = 1;
+    GunAttack = 2;
+    RifleAttackPrepare = 3;
+    RifleAttack = 4;
+    Jumping = 5;
+}
+
+message Marine {
+    required int32 id = 1;
+    required string name = 2;
+    required string tag = 3;
+    required int32 hpMax = 4;
+    required int32 hp = 5;
+
+    required Vector2 position = 6;
+    required Vector2 rotation = 7;
+
+    required Status status = 8;
+}
+
