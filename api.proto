@@ -13,16 +13,18 @@ message Sence {
 
 enum CmdEnum {
     createroom = 0;
-    createmarine = 1;
-    marineoperate = 2;
+    joinroom = 1;
+    createmarine = 2;
+    marineoperate = 3;
 }
 
 // you send this
 message Cmd {
     required CmdEnum cmd = 1;
     optional CreateRoom crm = 2;
-    optional CreateMarine cme = 3;
-    optional MarineOperate opt = 4;
+    optional JoinRoom jrm = 3;
+    optional CreateMarine cme = 4;
+    optional MarineOperate opt = 5;
 }
 
 
@@ -59,6 +61,11 @@ message SenceUpdate {
 message CreateRoom {
     required int32 map = 1;         // which map you wanna using.  ignore this right now.
 }
+
+message JoinRoom {
+    required int32 roomid = 1;
+}
+
 
 message CreateMarine {
     required int32 roomid = 1;
