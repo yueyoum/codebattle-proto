@@ -17,10 +17,12 @@ import "marine.proto";
 
 
 enum CmdEnum {
-    createroom = 0;
-    joinroom = 1;
-    createmarine = 2;
-    marineoperate = 3;
+    createroom = 0;          // This two Commands are NOT avlid for AI.
+    marinereport = 1;        // They used for Unity3d Client.
+
+    joinroom = 2;
+    createmarine = 3;
+    marineoperate = 4;
 }
 
 enum MessageEnum {
