@@ -29,5 +29,7 @@ message Marine {
 
     required Vector2 position = 6;
     required Status status = 7;
+
+    optional Vector2 targetPosition = 8;
 }
 

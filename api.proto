@@ -98,7 +98,9 @@ message CreateMarine {
 message MarineOperate {
     required int32 id = 1;              // marine id
     required Status status = 2;         // new status
-    optional Vector2 targetPostion = 3; // 
+    required Vector2 currentPosition = 3;
+    optional Vector2 targetPostion = 4; // 
+    optional int32 targetMarineId = 5;  
 }
 
 
