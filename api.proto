@@ -87,6 +87,8 @@ message CreateRoom {
 
 message JoinRoom {
     required int32 roomid = 1;
+
+    optional string token = 2;      // AI ignore this, It's for Unity3d Client
 }
 
 
@@ -98,11 +100,12 @@ message CreateMarine {
 
 
 message MarineOperate {
-    required int32 id = 1;              // marine id
-    required Status status = 2;         // new status
-    required Vector2 currentPosition = 3;
-    optional Vector2 targetPostion = 4; // 
-    optional int32 targetMarineId = 5;  
+    required int32 id = 1;                    // marine id
+    required Status status = 2;               // new status
+
+    optional Vector2 currentPosition = 3;     // AI just ignore this. It's for Unity3d Client.
+    optional Vector2 targetPostion = 4;       // ONLY need this when status is Run or RifleAttack
+    optional int32 targetMarineId = 5;        // ONLY need this when status is GunAttack
 }
 
 
