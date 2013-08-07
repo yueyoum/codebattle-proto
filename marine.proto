@@ -21,13 +21,10 @@ enum Status {
 
 message Marine {
     required int32 id = 1;
-    required string name = 2;
-    required string tag = 3;
-    required int32 hp = 4;
+    required int32 hp = 2;
+    required Vector2 position = 3;
+    required Status status = 4;
 
-    required Vector2 position = 6;
-    required Status status = 7;
-
-    optional Vector2 targetPosition = 8;   // GunAttack Target
+    optional Vector2 targetPosition = 5;   // Run or GunAttack Target
 }
 

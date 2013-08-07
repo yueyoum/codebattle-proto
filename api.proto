@@ -20,9 +20,8 @@ enum CmdEnum {
     createroom = 0;          // This two Commands are NOT avlid for AI.
     marinereport = 1;        // They are used for Unity3d Client.
 
-    ready = 2;               // send this to indicate you are ready for battle
     joinroom = 3;
-    createmarine = 4;
+    createmarine = 4;        // This command NOT in use right now.
     marineoperate = 5;
 }
 
@@ -79,8 +78,6 @@ message SenceUpdate {
 }
 
 
-
-
 // Commands
 message CreateRoom {
     required int32 map = 1;         // which map you wanna using. 
@@ -97,8 +94,7 @@ message JoinRoom {
 message CreateMarine {
     required int32 roomid = 1;      // you MUST create/join room first
                                     // and you will got a roomid.
-    required string name = 2;       // your marine name
-    required Vector2 position = 3;  // your marine birth point (MUST in the map area).
+    required Vector2 position = 2;  // your marine birth point (MUST in the map area).
 }
 
 
@@ -107,7 +103,7 @@ message MarineOperate {
     required Status status = 2;               // new status
 
     optional Vector2 currentPosition = 3;     // AI just ignore this. It's for Unity3d Client.
-    optional Vector2 targetPostion = 4;       // ONLY need this when status is Run or RifleAttack
+    optional Vector2 targetPostion = 4;       // ONLY need this when status is Run or GunAttack
 }
 
 
@@ -121,6 +117,7 @@ message CreateRoomResponse {
 message JoinRoomResponse {
     required int32 id = 1;              // room id
     required Vector2Int size = 2;       // map size, (x, z)
+    repeated Marine marines = 3;        // your marines, created automatic when you join room.
 }
 
 
