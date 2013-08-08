@@ -17,12 +17,9 @@ import "marine.proto";
 
 
 enum CmdEnum {
-    createroom = 0;          // This two Commands are NOT avlid for AI.
-    marinereport = 1;        // They are used for Unity3d Client.
-
-    joinroom = 3;
-    createmarine = 4;        // This command NOT in use right now.
-    marineoperate = 5;
+    joinroom = 1;
+    createmarine = 2;        // This command NOT in use right now.
+    marineoperate = 3;
 }
 
 enum MessageEnum {
@@ -40,10 +37,9 @@ enum MessageEnum {
 // Other optional fields can be ignored.
 message Cmd {
     required CmdEnum cmd = 1;
-    optional CreateRoom crm = 2;
-    optional JoinRoom jrm = 3;
-    optional CreateMarine cme = 4;
-    optional MarineOperate opt = 5;
+    optional JoinRoom jrm = 2;
+    optional CreateMarine cme = 3;
+    optional MarineOperate opt = 4;
 }
 
 
@@ -64,9 +60,8 @@ message Message {
 message CmdResponse {
     required int32 ret = 1;         // 0 for success, others see top of this file.
     required CmdEnum cmd = 2;       // what cmd response for
-    optional CreateRoomResponse crmResponse = 3;
-    optional JoinRoomResponse jrmResponse = 4;
-    optional CreateMarineResponse cmeResponse = 5;
+    optional JoinRoomResponse jrmResponse = 3;
+    optional CreateMarineResponse cmeResponse = 4;
 }
 
 
@@ -77,17 +72,8 @@ message SenceUpdate {
     repeated Marine marine = 1;
 }
 
-
-// Commands
-message CreateRoom {
-    required int32 map = 1;         // which map you wanna using. 
-                                    // ignore this right now. any integer will be ok.
-}
-
 message JoinRoom {
     required int32 roomid = 1;
-
-    optional string token = 2;      // AI ignore this, It's for Unity3d Client
 }
 
 
@@ -102,18 +88,11 @@ message MarineOperate {
     required int32 id = 1;                    // marine id
     required Status status = 2;               // new status
 
-    optional Vector2 currentPosition = 3;     // AI just ignore this. It's for Unity3d Client.
-    optional Vector2 targetPostion = 4;       // ONLY need this when status is Run or GunAttack
+    optional Vector2 targetPostion = 3;       // ONLY need this when status is Run or GunAttack
 }
 
 
 // Command Response
-message CreateRoomResponse {
-    required int32 id = 1;              // room id
-    required string token = 2;          // room token, this is used for unity3d client's joinroom command
-    required Vector2Int size = 3;       // map size, (x, z)
-}
-
 message JoinRoomResponse {
     required int32 id = 1;              // room id
     required Vector2Int size = 2;       // map size, (x, z)
@@ -124,3 +103,5 @@ message JoinRoomResponse {
 message CreateMarineResponse {
     required Marine marine = 1;         // your marine
 }
+
+

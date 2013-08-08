@@ -1,0 +1,87 @@
+package CodeBattle.Observer;
+
+import "marine.proto";
+
+
+enum CmdEnum {
+    createroom = 0;
+    joinroom = 1;
+    marinereport = 2;
+}
+
+enum MessageEnum {
+    cmdresponse = 0;
+    senceupdate = 1;
+}
+
+
+
+message Cmd {
+    required CmdEnum cmd = 1;
+    optional CreateRoom crm = 2;
+    optional JoinRoom jrm = 3;
+    optional MarineReport mrt = 4;
+}
+
+
+message Message {
+    required MessageEnum msg = 1;
+    optional CmdResponse response = 2;
+    optional SenceUpdate update = 3;
+}
+
+
+
+message CreateRoom {
+    required int32 map = 1;
+}
+
+message CreateRoomResponse {
+    required int32 id = 1;          // room id
+    required Vector2Int size = 2;
+}
+
+message JoinRoom {
+    required int32 roomid = 1;
+}
+
+message JoinRoomResponse {
+    required int32 id = 1;          // room id
+    required Vector2Int size = 2;
+}
+
+
+
+
+enum ReportEnum {
+    toidle = 0;
+    damage = 1;
+}
+
+message MarineReport {
+    required ReportEnum report = 1;
+    optional MarineStatus midle = 2;
+    optional MarineStatus mattack = 3;
+    optional MarineStatus mdamage = 4;
+}
+
+
+message MarineStatus {
+    required int32 id = 1;          // marine id
+    required Status status = 2;
+    required Vector2 position = 3;
+}
+
+
+message CmdResponse {
+    required int32 ret = 1;
+    required CmdEnum cmd = 2;
+    optional CreateRoomResponse crmResponse = 3;
+    optional JoinRoomResponse jrmResponse = 4;
+}
+
+
+
+message SenceUpdate {
+    repeated Marine marine = 1;
+}
