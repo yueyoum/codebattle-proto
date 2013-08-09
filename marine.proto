@@ -19,12 +19,21 @@ enum Status {
     Dead = 4;
 }
 
+enum Role {
+    Normal = 0;
+    Attacker = 1;
+    Injured = 2;
+}
+
 message Marine {
     required int32 id = 1;
     required int32 hp = 2;
     required Vector2 position = 3;
     required Status status = 4;
 
-    optional Vector2 targetPosition = 5;   // Run or GunAttack Target
+    optional Vector2 targetPosition = 5;
+
+    optional int32 flaresAmount = 6;
+    optional Role role = 7;
 }
 
