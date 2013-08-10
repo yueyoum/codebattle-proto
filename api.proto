@@ -69,7 +69,8 @@ message CmdResponse {
 // NOTE, ONLY contain one Marine per `SenceUpdate`,
 // Which means, When one marine has changed, you will got this message.
 message SenceUpdate {
-    repeated Marine marine = 1;
+    repeated Marine own = 1;
+    repeated Marine others = 2; 
 }
 
 message JoinRoom {
