@@ -12,6 +12,7 @@ enum CmdEnum {
 enum MessageEnum {
     cmdresponse = 0;
     senceupdate = 1;
+    createmarine = 2;
 }
 
 
@@ -28,6 +29,7 @@ message Message {
     required MessageEnum msg = 1;
     optional CmdResponse response = 2;
     optional SenceUpdate update = 3;
+    optional CreateMarine marines = 4;
 }
 
 
@@ -89,4 +91,9 @@ message CmdResponse {
 
 message SenceUpdate {
     repeated Marine marine = 1;
+}
+
+message CreateMarine {
+    required string color = 1;
+    repeated Marine marine = 2;
 }

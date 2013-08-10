@@ -82,6 +82,7 @@ message EndBattle {
 
 message JoinRoom {
     required int32 roomid = 1;
+    optional string color = 2;
 }
 
 
