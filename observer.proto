@@ -57,6 +57,8 @@ enum ReportEnum {
     toidle = 0;
     damage = 1;
     flares = 2;
+    flares2 = 3;
+    gunattack = 4;
 }
 
 message MarineReport {
@@ -64,8 +66,8 @@ message MarineReport {
     optional MarineStatus midle = 2;
     optional MarineStatus mattack = 3;
     optional MarineStatus mdamage = 4;
-    optional int32 flaresMarineId = 5;
-    repeated MarineStatus mflares = 6;
+    optional int32 reporterId = 5;
+    repeated MarineStatus marines = 6;
 }
 
 
