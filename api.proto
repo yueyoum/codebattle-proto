@@ -26,6 +26,7 @@ enum MessageEnum {
     cmdresponse = 0;
     senceupdate = 1;
     startbattle = 2;
+    endbattle = 3;
 }
 
 
@@ -52,6 +53,7 @@ message Message {
     required MessageEnum msg = 1;
     optional CmdResponse response = 2;
     optional SenceUpdate update = 3;
+    optional EndBattle endbattle = 4;
 }
 
 
@@ -71,6 +73,11 @@ message CmdResponse {
 message SenceUpdate {
     repeated Marine own = 1;
     repeated Marine others = 2; 
+}
+
+message EndBattle {
+    required string reason = 1;
+    required bool win = 2;
 }
 
 message JoinRoom {
