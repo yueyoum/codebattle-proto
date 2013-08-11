@@ -3,39 +3,42 @@ package CodeBattle.Api;
 import "marine.proto";
 
 // Error Code
-// 1 - You have already create a room
-// 2 - You have already join a room
-// 3 - Can not found the room which you wanna join in
-// 4 - The room has no place to join in  [NOT used so far]
-// 5 - You can't create marine before create/join a room
-// 6 - Create marine NOT in your create/join room
-// 7 - You have touched the limits of this room allowed max marine creates number.
-
-
+//
+// 10 - Invalid Message
+// 11 - Not Supported Command   (such as you send `createmarine` command)
+// 12 - You have already create a room                           [NOT FOR AI]
+// 13 - You have already join a room
+// 14 - Can not found the room which you wanna join in
+// 15 - The room has no place to join in
+// 16 - You can't create marine before create/join a room        [NOT IN USE]
+// 17 - Create marine NOT in your create/join room               [NOT IN USE]
+// 18 - Create marine limits                                     [NOT IN USE]
+// 19 - Can not operate marine before join room
+// 20 - Operate a marine which not belongs to you
+// 21 - Operate a marine which already dead
+// 22 - This marine's GunAttack in Cooldown
+// 23 - This marine's Flares were run out
+// 24 - Operate marine, targetPosition out of map's size
+// 25 - Operate marine before startbattle
 
 
 
 
 enum CmdEnum {
     joinroom = 1;
-    createmarine = 2;        // This command NOT in use right now.
+    createmarine = 2;     // This command NOT in use right now.
     marineoperate = 3;
 }
 
 enum MessageEnum {
     cmdresponse = 0;
     senceupdate = 1;
-    startbattle = 2;
+    startbattle = 2;      // you can not operate your marine before recevie startbattle message
     endbattle = 3;
 }
 
 
 // You send this `Cmd` to Server
-// You should tell the server, what the Cmd actually does.
-// For example, you wanna create a marine in current game,
-// so, cmd = CmdEnum.createmarine (NOTE, different language maybe have different usage of Enum type)
-// then you must fill up the `CreateMarine` field.
-// Other optional fields can be ignored.
 message Cmd {
     required CmdEnum cmd = 1;
     optional JoinRoom jrm = 2;
@@ -45,10 +48,6 @@ message Cmd {
 
 
 // And got `Message` back from Server
-// Same as the `Cmd`, there is also an enum field to tell you what the message is.
-// if msg == MessageEnum.cmdresponse, means this is a response for your `Cmd`.
-// if msg == MessageEnum.senceupdate, means the game sence has changed. 
-// (There are only Marines in sence so far)
 message Message {
     required MessageEnum msg = 1;
     optional CmdResponse response = 2;
@@ -57,39 +56,28 @@ message Message {
 }
 
 
-// `CmdResponse` NOT contains `MarineOperate` command.
-// Because All Marine Changes will notify you via `SenceUpdate`
-message CmdResponse {
-    required int32 ret = 1;         // 0 for success, others see top of this file.
-    optional CmdEnum cmd = 2;       // what cmd response for
-    optional JoinRoomResponse jrmResponse = 3;
-    optional CreateMarineResponse cmeResponse = 4;
-}
-
-
-// `SenceUpdate` only contains Marine so far.
-// NOTE, ONLY contain one Marine per `SenceUpdate`,
-// Which means, When one marine has changed, you will got this message.
-message SenceUpdate {
-    repeated Marine own = 1;
-    repeated Marine others = 2; 
-}
-
-message EndBattle {
-    required string reason = 1;
-    required bool win = 2;
-}
 
 message JoinRoom {
     required int32 roomid = 1;
-    optional string color = 2;
+    optional string color = 2;           // your marine color, default is red
+}
+
+message JoinRoomResponse {
+    required int32 id = 1;              // room id
+    required Vector2Int size = 2;       // map size, (x, z)
+    repeated Marine marines = 3;        // your marines, created automatic when you join room.
 }
 
 
+// this command not in use
 message CreateMarine {
     required int32 roomid = 1;      // you MUST create/join room first
                                     // and you will got a roomid.
     required Vector2 position = 2;  // your marine birth point (MUST in the map area).
+}
+
+message CreateMarineResponse {
+    required Marine marine = 1;         // your marine
 }
 
 
@@ -101,16 +89,27 @@ message MarineOperate {
 }
 
 
-// Command Response
-message JoinRoomResponse {
-    required int32 id = 1;              // room id
-    required Vector2Int size = 2;       // map size, (x, z)
-    repeated Marine marines = 3;        // your marines, created automatic when you join room.
+
+
+
+// `CmdResponse` NOT contains a message such as `MarineOperateResponse`.
+// Due to all marines state changes will notify you via `SenceUpdate`
+message CmdResponse {
+    required int32 ret = 1;         // 0 for success, others see top of this file.
+    optional CmdEnum cmd = 2;       // what cmd response for
+    optional JoinRoomResponse jrmResponse = 3;
+    optional CreateMarineResponse cmeResponse = 4;
 }
 
 
-message CreateMarineResponse {
-    required Marine marine = 1;         // your marine
+// `SenceUpdate` only contains Marine so far.
+message SenceUpdate {
+    repeated Marine own = 1;
+    repeated Marine others = 2; 
 }
 
+message EndBattle {
+    required string reason = 1;
+    required bool win = 2;
+}
 

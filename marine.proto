@@ -32,8 +32,19 @@ message Marine {
     required Status status = 4;
 
     optional Vector2 targetPosition = 5;
-
     optional int32 flaresAmount = 6;
+
     optional Role role = 7;
 }
 
+// In Api.SenceUpdate Message, 
+// Your own marines and other marines are all using the Marine message
+// For other marines,
+// targetPosition & flaresAmount, will always be blank.
+// For you don't know where other marines run to or gun shoot to.
+//
+// When a buttle hitted some marine,
+// role field will be filled up. 
+// A marine who shoot the buttle, he's role will be Attacker
+// A marine who hitted by a buttle, he's role will be Injured.
+// Ohterwise role always be Normal
