@@ -1,5 +1,11 @@
 #Codebattle Proto
 
+*   [codebattle-server][20]
+*   [codebattle-proto][21]
+*   [codebattle-ai][22]
+*   [codebattle-client][23]
+
+
 CodeBattle 的网络通信协议 使用了 [google protubuf][1].
 
 AI 与 Server 进行交互就是通过 `api.proto` 中定义的message进行的。
@@ -61,4 +67,9 @@ cmd 为必填域，表明你要进行的是什么操作。
 上面只是数据如何encode/decode。玩法规则在 [这里][2]
 
 [1]: https://developers.google.com/protocol-buffers/docs/overview
-[2]: 
+[2]: https://github.com/yueyoum/codebattle-ai
+
+[20]: https://github.com/yueyoum/codebattle-server
+[21]: https://github.com/yueyoum/codebattle-proto
+[22]: https://github.com/yueyoum/codebattle-ai
+[23]: https://github.com/yueyoum/codebattle-client
