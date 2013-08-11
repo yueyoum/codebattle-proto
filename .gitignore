@@ -1,3 +1,4 @@
 *
 !*.proto
 !.gitignore
+!README.md
