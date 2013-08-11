@@ -61,7 +61,7 @@ message Message {
 // Because All Marine Changes will notify you via `SenceUpdate`
 message CmdResponse {
     required int32 ret = 1;         // 0 for success, others see top of this file.
-    required CmdEnum cmd = 2;       // what cmd response for
+    optional CmdEnum cmd = 2;       // what cmd response for
     optional JoinRoomResponse jrmResponse = 3;
     optional CreateMarineResponse cmeResponse = 4;
 }
