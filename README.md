@@ -11,7 +11,7 @@ CodeBattle 的网络通信协议 使用了 [google protubuf][1].
 AI 与 Server 进行交互就是通过 `api.proto` 中定义的message进行的。
 所以无论你使用什么语言，只要按照这些message encode, decode 数据，就可进行操作了。
 
-现在有提供的AI例子供你参考，如果没有你喜欢的语言，欢迎发送pull request进行添加。 你在自己写encode, decode数据的时候只要关注 `api.proto`, `marine.proto` 即可。
+现在有提供的 [AI例子][2] 供你参考，如果没有你喜欢的语言，欢迎发送pull request进行添加。 你在自己写encode, decode数据的时候只要关注 `api.proto`, `marine.proto` 即可。
 
 ## 发送数据 [api.proto -> Cmd]
 
@@ -64,10 +64,11 @@ cmd 为必填域，表明你要进行的是什么操作。
 
 ## 游戏规则
 
-上面只是数据如何encode/decode。玩法规则在 [这里][2]
+上面只是数据的基本定义。玩法规则在 [这里][2]
 
 [1]: https://developers.google.com/protocol-buffers/docs/overview
 [2]: https://github.com/yueyoum/codebattle-ai
+
 
 [20]: https://github.com/yueyoum/codebattle-server
 [21]: https://github.com/yueyoum/codebattle-proto
